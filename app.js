@@ -8,7 +8,7 @@ app.use(express.json())
 app.use('/api',router)
 app.use(errorHandler())
 
-const PORT = 8080
+const PORT = 8888
 app.listen(PORT,()=>{
     console.log(PORT)
 })
