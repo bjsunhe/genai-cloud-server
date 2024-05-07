@@ -80,7 +80,7 @@ const OpenaiAPI=async (req, res, next) => {
   const connection = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
-    password: 'Cool123456789',
+    password: 'Cool1234567890-',
     database: 'bmg'
   });
   
