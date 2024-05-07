@@ -30,58 +30,48 @@ const OpenaiAPI=async (req, res, next) => {
 
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo-2024-04-09",
-    messages: [
-      {"role": "system", "content": `\nYou are a natural language to SQL generator that directly outputs SQL statements based on natural language input, no explanation needed.\n The Database is MySQL. Only one table called festo_round_cylinder in the database. The table name and fields are as follows: CREATE TABLE festo_round_cylinder (
-        Stroke VARCHAR(255) COMMENT 'Stroke: 1 mm ... 200 mm',
-        PistonDiameter VARCHAR(255) COMMENT 'Piston diameter: 25 mm',
-        Cushioning VARCHAR(255) COMMENT 'Cushioning',
-        MountingPosition VARCHAR(255) COMMENT 'Mounting position',
-        Design VARCHAR(255) COMMENT 'Design',
-        PositionDetection VARCHAR(255) COMMENT 'Position detection',
-        Symbol VARCHAR(255) COMMENT 'Symbol',
-        Variants VARCHAR(255) COMMENT 'Variants',
-        OperatingPressureMPa VARCHAR(255) COMMENT 'Operating pressure: 0.06 MPa ... 1 MPa',
-        OperatingPressureBar VARCHAR(255) COMMENT 'Operating pressure: 0.6 bar ... 10 bar',
-        ModeOfOperation VARCHAR(255) COMMENT 'Mode of operation',
-        OperatingMedium VARCHAR(255) COMMENT 'Operating medium',
-        NoteOnOperatingAndPilotMedium VARCHAR(255) COMMENT 'Note on operating and pilot medium',
-        CorrosionResistanceClassCRC VARCHAR(255) COMMENT 'Corrosion resistance class CRC: 0 - No corrosion stress',
-        LABS_PWIS_Conformity VARCHAR(255) COMMENT 'LABS (PWIS) conformity',
-        SuitabilityForTheProductionOfLi_ionBatteries VARCHAR(255) COMMENT 'Suitability for the production of Li-ion batteries',
-        CleanroomClass VARCHAR(255) COMMENT 'Cleanroom class',
-        AmbientTemperature VARCHAR(255) COMMENT 'Ambient temperature: -20 °C ... 80 °C',
-        CushioningLength VARCHAR(255) COMMENT 'Cushioning length: 17 mm',
-        TheoreticalForceAt0_6MPaReturnStroke VARCHAR(255) COMMENT 'Theoretical force at 0.6 MPa (6 bar, 87 psi), return stroke: 247.4 N',
-        TheoreticalForceAt0_6MPaAdvanceStroke VARCHAR(255) COMMENT 'Theoretical force at 0.6 MPa (6 bar, 87 psi), advance stroke: 294.5 N',
-        MovingMassFor0mmStroke VARCHAR(255) COMMENT 'Moving mass for 0 mm stroke: 63.6 g',
-        AdditionalMovingMassPer10mmStroke VARCHAR(255) COMMENT 'Additional moving mass per 10 mm stroke: 6 g',
-        BasicWeightFor0mmStroke VARCHAR(255) COMMENT 'Basic weight for 0 mm stroke: 180.2 g',
-        AdditionalWeightPer10mmStroke VARCHAR(255) COMMENT 'Additional weight per 10 mm stroke: 11 g',
-        TypeOfMounting VARCHAR(255) COMMENT 'Type of mounting',
-        PneumaticConnection VARCHAR(255) COMMENT 'Pneumatic connection: G1/8',
-        NoteOnMaterials VARCHAR(255) COMMENT 'Note on materials: RoHS-compliant',
-        MaterialCover VARCHAR(255) COMMENT 'Material cover',
-        MaterialSeals VARCHAR(255) COMMENT 'Material seals',
-        MaterialPistonRod VARCHAR(255) COMMENT 'Material piston rod',
-        MaterialCylinderBarrel VARCHAR(255) COMMENT 'Material cylinder barrel',
-        OrderCode VARCHAR(255) COMMENT 'Order code',
-        Code VARCHAR(255) COMMENT 'Code',
-        DataSheetLink VARCHAR(255) COMMENT 'Datasheet link',
-        MannualLink VARCHAR(255) COMMENT 'Mannual link',
-        ProductLink VARCHAR(255) COMMENT 'ProductLink'
+    messages: 
+    [
+          {"role": "system", "content": `\nYou are a natural language to SQL generator that directly outputs SQL statements based on natural language input, no explanation needed.\n The Database is MySQL. Only one table called bmg_palletizer in the database. The table name and fields are as follows:  CREATE TABLE bmg_palletizer (
+        CarrierType VARCHAR(255) COMMENT 'Carrier Type: Blister Type 1 (a specific type of blister packaging)',
+        CarrierSize VARCHAR(255) COMMENT 'Carrier Size: 400x300x47 (Dimensions of the carrier in millimeters, length x width x height)',
+        PalletizingType VARCHAR(255) COMMENT 'Palletizing Type: Stack (Describes the method of stacking on the pallet)',
+        LiftPositionCellView VARCHAR(255) COMMENT 'Lift Position from Cell View: right (Indicates the position of the lift from the perspective of the cell)',
+        MATNumber VARCHAR(255) COMMENT 'MAT Number: 0804EZ0547 (A specific material or component number)',
+        Description VARCHAR(255) COMMENT 'Description: BK3.1/3.2 (Label or identifier for a part or system component)',
+        ProjectNumber VARCHAR(255) COMMENT 'Project Number: 4702115 (Identifies the project number)',
+        Station VARCHAR(255) COMMENT 'Station: Stat100 (Specifies the particular station within the production line)',
+        BeltLength INT(255) COMMENT 'Belt Length: 1600 (Length of the conveyor belt in millimeters)',
+        ExternalBeltWidth INT(255) COMMENT 'External Belt Width: 415 (Total external width of the conveyor belt in millimeters)',
+        RunningSurfaceWidth INT(255) COMMENT 'Running Surface Width: 401 (Width of the active or functional area of the belt in millimeters)',
+        InternalBeltWidth INT(255) COMMENT 'Internal Belt Width: 325 (Width of the belt inside the edges in millimeters)',
+        UpperBeltLevel INT(255) COMMENT 'Upper Belt Level: 1020 (Vertical position or height of the upper belt in millimeters)',
+        LowerBeltLevel INT(255) COMMENT 'Lower Belt Level: 375 (Vertical position or height of the lower belt in millimeters)',
+        HeightDifferenceBands INT(255) COMMENT 'Height Difference Between Belts: 645 (Height difference between the upper and lower belts in millimeters)',
+        AssemblyPlateLevel INT(255) COMMENT 'Assembly Plate Level: 855 (Vertical position or height of the assembly plate in millimeters)',
+        NumberOfUpperMotors INT(255) COMMENT 'Number of Upper Motors: 1 (Specifies how many motors are used at the upper part of the system)',
+        NumberOfLowerMotors INT(255) COMMENT 'Number of Lower Motors: 1 (Specifies how many motors are used at the lower part of the system)',
+        Tracks INT(255) COMMENT 'Tracks: 2 (Indicates the number of tracks or paths available for the belts or carriers)',
+        BeltType VARCHAR(255) COMMENT 'Belt Type: BS2/M (Specifies the type or model of the conveyor belt used)',
+        unique_id VARCHAR(255) COMMENT 'Unique Id of the palletizer',
+        CarrierSizeLength INT(255) COMMENT 'Length of the carrier',
+        CarrierSizeWidth INT(255) COMMENT 'Width of the carrier',
+        CarrierSizeHeight INT(255) COMMENT 'Height of the carrier'
     
-    ); `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
-      "role":"user",
-      "content":`Input natural language: ${sql}\nOutput SQL (I only need the pure SQL, don't add any other words or characters. Because I want to execute what you give me directly.):\n`
-  
-    }
+    );
+    
+    `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
+          "role":"user",
+          "content":`Input natural language: ${sql}\nOutput SQL (I only need the pure SQL, don't add any other words or characters. Because I want to execute what you give me directly.):\n`
+      
+        }
     ],
     temperature: 0,
     top_p: 1,
   });
 
 
-  console.log(response)
+  console.log(response.choices[0].message)
 
   
 
