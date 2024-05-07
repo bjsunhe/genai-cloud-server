@@ -27,6 +27,7 @@ const OpenaiAPI=async (req, res, next) => {
 
 
 
+
   const response = await openai.chat.completions.create({
     model: "gpt-4-turbo-2024-04-09",
     messages: [
@@ -85,11 +86,41 @@ const OpenaiAPI=async (req, res, next) => {
   
 
 
-  res.status(200).json({
-    success: "success",
-    sql:sql,
-    result:results,
+
+  const connection = mysql.createConnection({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'Cool123456789',
+    database: 'bmg'
   });
+  
+  connection.connect(err => {
+    if (err) {
+      console.error('Error connecting to MySQL:', err);
+      return;
+    }
+    console.log('Connected to MySQL');
+  
+
+    connection.query(response.choices[0].message.content, (err, results) => {
+      if (err) {
+        console.error('Error selecting data:', err);
+      } else {
+        console.log('Selected data:');
+        console.log(results); // Log the query results
+            connection.end();
+  
+  
+        res.status(200).json({
+          success: "success",
+          sql:sql,
+          result:results,
+        });
+      }
+  
+    });
+  });
+
 
 
   }catch(e){
