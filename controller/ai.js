@@ -70,7 +70,7 @@ const OpenaiAPI=async (req, res, next) => {
   });
 
 
-  console.log(response)
+  console.log(response.choices[0].message)
 
   
 
