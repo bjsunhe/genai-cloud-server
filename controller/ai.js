@@ -242,7 +242,7 @@ const RexrothAPI=async (req, res, next) => {
     
     `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
           "role":"user",
-          "content":`Input natural language: ${sql}\nPure SQL: \n`
+          "content":`Input natural language: ${sql}\n response: '''pure executable sql'''  \n`
       
         }
     ],
