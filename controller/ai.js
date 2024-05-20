@@ -273,7 +273,7 @@ const RexrothAPI=async (req, res, next) => {
     console.log('Connected to MySQL');
   
 
-    connection.query(response.choices[0].message.content, (err, results) => {
+    connection.query(`SELECT ${response.choices[0].message.content.split(';')[0].split('SELECT')[1]};`, (err, results) => {
       if (err) {
         console.error('Error selecting data:', err);
       } else {
