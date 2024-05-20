@@ -63,7 +63,7 @@ const OpenaiAPI=async (req, res, next) => {
           
     `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
           "role":"user",
-          "content":`Input natural language: ${sql}`
+          "content":`Input natural language: ${sql}, give me the pure sql without any other format character`
       
         }
     ],
