@@ -1,5 +1,13 @@
 # genai-cloud-server
 
+
+sudo mysql -u root -p
+use bmg;
+SHOW TABLES;
+SHOW FULL COLUMNS FROM bmg_palletizer;
+
+
+
 34.125.249.167
 
 how many palletizer do we have
