@@ -145,7 +145,7 @@ const RexrothAPI=async (req, res, next) => {
     model: "gpt-4o",
     messages: 
     [
-          {"role": "system", "content": `\nYou are a natural language to SQL generator that directly outputs SQL statements based on natural language input, no explanation needed.\n The Database is MySQL. Only one table called bmg_palletizer in the database. The table name and fields are as follows:  CREATE TABLE rexroth_high_precision_ball_runner_blocks_BSHP (
+          {"role": "system", "content": `\nYou are a natural language to SQL generator that directly outputs SQL statements based on natural language input, no explanation needed. I only need the pure SQL, don't add any other words or characters. Because I want to execute what you give me directly.\n The Database is MySQL. The table name and fields are as follows:  CREATE TABLE rexroth_high_precision_ball_runner_blocks_BSHP (
             nominalSize_mm_ TEXT COMMENT 'Nominal size [mm]',
             format TEXT COMMENT 'Format',
             typeOfConstruction TEXT COMMENT 'Type of construction',
@@ -242,7 +242,7 @@ const RexrothAPI=async (req, res, next) => {
     
     `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
           "role":"user",
-          "content":`Input natural language: ${sql}\nOutput SQL (I only need the pure SQL, don't add any other words or characters. Because I want to execute what you give me directly.):\n`
+          "content":`Input natural language: ${sql}\nPure SQL: \n`
       
         }
     ],
