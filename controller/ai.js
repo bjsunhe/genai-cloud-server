@@ -300,14 +300,32 @@ const RexrothAPI=async (req, res, next) => {
       } else {
         console.log('Selected data:');
         console.log(results); // Log the query results
-            connection.end();
-  
-  
-        res.status(200).json({
-          success: "success",
-          sql:sql,
-          result:results,
+        
+        connection.query(`SELECT COLUMN_NAME, COLUMN_COMMENT
+        FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'bmg'
+        AND TABLE_NAME = 'rexroth_high_precision_ball_runner_blocks_BSHP';`, (err, comments) => {
+          if (err) {
+            console.error('Error selecting data:', err);
+          } else {
+            console.log('Selected data:');
+            console.log(comments); // Log the query results
+    
+    
+                connection.end();
+      
+      
+            res.status(200).json({
+              success: "success",
+              sql:sql,
+              result:results,
+              comments
+            });
+          }
+      
         });
+
+            
       }
   
     });
@@ -413,31 +431,40 @@ const FestoAPI=async (req, res, next) => {
     database: 'bmg'
   });
   
-  connection.connect(err => {
+  connection.query(`SELECT ${response.choices[0].message.content.split(';')[0].split('SELECT')[1]};`, (err, results) => {
     if (err) {
-      console.error('Error connecting to MySQL:', err);
-      return;
-    }
-    console.log('Connected to MySQL');
+      console.error('Error selecting data:', err);
+    } else {
+      console.log('Selected data:');
+      console.log(results); // Log the query results
+      
+      connection.query(`SELECT COLUMN_NAME, COLUMN_COMMENT
+      FROM information_schema.COLUMNS
+      WHERE TABLE_SCHEMA = 'bmg'
+      AND TABLE_NAME = 'festo_round_cylinder';`, (err, comments) => {
+        if (err) {
+          console.error('Error selecting data:', err);
+        } else {
+          console.log('Selected data:');
+          console.log(comments); // Log the query results
   
+  
+              connection.end();
+    
+    
+          res.status(200).json({
+            success: "success",
+            sql:sql,
+            result:results,
+            comments
+          });
+        }
+    
+      });
 
-    connection.query(`SELECT ${response.choices[0].message.content.split(';')[0].split('SELECT')[1]};`, (err, results) => {
-      if (err) {
-        console.error('Error selecting data:', err);
-      } else {
-        console.log('Selected data:');
-        console.log(results); // Log the query results
-            connection.end();
-  
-  
-        res.status(200).json({
-          success: "success",
-          sql:sql,
-          result:results,
-        });
-      }
-  
-    });
+          
+    }
+
   });
 
 
