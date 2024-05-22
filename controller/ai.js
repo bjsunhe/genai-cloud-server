@@ -99,17 +99,38 @@ const OpenaiAPI=async (req, res, next) => {
       } else {
         console.log('Selected data:');
         console.log(results); // Log the query results
-            connection.end();
-  
-  
-        res.status(200).json({
-          success: "success",
-          sql:sql,
-          result:results,
+        
+        connection.query(`SELECT COLUMN_NAME, COLUMN_COMMENT
+        FROM information_schema.COLUMNS
+        WHERE TABLE_SCHEMA = 'bmg'
+        AND TABLE_NAME = 'bmg_palletizer';`, (err, comments) => {
+          if (err) {
+            console.error('Error selecting data:', err);
+          } else {
+            console.log('Selected data:');
+            console.log(comments); // Log the query results
+    
+    
+                connection.end();
+      
+      
+            res.status(200).json({
+              success: "success",
+              sql:sql,
+              result:results,
+              comments
+            });
+          }
+      
         });
+
+            
       }
   
     });
+
+
+
   });
 
 
