@@ -479,10 +479,96 @@ const FestoAPI=async (req, res, next) => {
 };
 
 
+const RexrothVarioFlowCategoryAPI=async (req, res, next) => {
+  try{
+    let result
+
+  let sql=req.body.sql
+  console.log(sql)
+
+  let previousQuestions=req.body.previousQuestions
+  console.log(previousQuestions)
+
+
+
+
+
+
+
+
+  const response = await openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: 
+    [
+          {"role": "system", "content": `You are a natural language to SQL generator that directly outputs SQL statements based on natural language input, no explanation needed. I only need the pure SQL, don't add any other words or characters. Because I want to execute what you give me directly. The Database is MySQL. The table name and fields are as follows:          
+          CREATE TABLE rexroth_varioflow_categories (
+            category VARCHAR(255) PRIMARY KEY,
+            parentCategory VARCHAR(255),
+            categoryLink VARCHAR(255),
+            FOREIGN KEY (parentCategory) REFERENCES rexroth_varioflow_categories(category)
+        );    
+    `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
+          "role":"user",
+          "content":`Input natural language: ${sql}\n response: '''pure executable sql'''  \n`
+      
+        }
+    ],
+    temperature: 0,
+    top_p: 1,
+  });
+
+
+  console.log(response.choices[0].message)
+
+  
+
+
+
+  const connection = mysql.createConnection({
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'Cool1234567890-',
+    database: 'bmg'
+  });
+  
+  connection.query(`SELECT ${response.choices[0].message.content.split(';')[0].split('SELECT')[1]};`, (err, results) => {
+    if (err) {
+      console.error('Error selecting data:', err);
+    } else {
+      console.log('Selected data:');
+      console.log(results); // Log the query results
+      
+      connection.end();
+    
+    
+          res.status(200).json({
+            success: "success",
+            sql:sql,
+            result:results,
+          });
+
+          
+    }
+
+  });
+
+
+
+  }catch(e){
+    res.status(404).json({
+      message: "err",
+      err:e,
+    });
+  }
+  
+};
+
+
 
 module.exports = {
 
   OpenaiAPI,
   RexrothAPI,
-  FestoAPI
+  FestoAPI,
+  RexrothVarioFlowCategoryAPI
 };
