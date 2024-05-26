@@ -506,7 +506,24 @@ const RexrothVarioFlowCategoryAPI=async (req, res, next) => {
             parentCategory VARCHAR(255),
             categoryLink VARCHAR(255),
             FOREIGN KEY (parentCategory) REFERENCES rexroth_varioflow_categories(category)
-        );    
+          );
+          
+          
+          CREATE TABLE rexroth_varioflow_products (
+            sku VARCHAR(50) PRIMARY KEY,
+            productName VARCHAR(255),
+            productLink VARCHAR(255),
+            description TEXT,
+            imageUrl VARCHAR(255),
+            shippingInfo VARCHAR(255),
+            price VARCHAR(50),
+            stockStatus VARCHAR(50),
+            category VARCHAR(255),
+            CONSTRAINT fk_category
+                FOREIGN KEY (category)
+                REFERENCES rexroth_varioflow_categories(category)
+          );
+      
     `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
           "role":"user",
           "content":`Input natural language, in the WHERE clause use LIKE '%keyword%' as much as possible, instead of ='keyword', the keyword is case-insensitive: ${sql}\n response: '''pure executable sql'''  \n`
