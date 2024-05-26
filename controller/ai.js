@@ -509,7 +509,7 @@ const RexrothVarioFlowCategoryAPI=async (req, res, next) => {
         );    
     `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
           "role":"user",
-          "content":`Input natural language: ${sql}\n response: '''pure executable sql'''  \n`
+          "content":`Input natural language, in the WHERE clause use LIKE '%keyword%' as much as possible, instead of ='keyword': ${sql}\n response: '''pure executable sql'''  \n`
       
         }
     ],
