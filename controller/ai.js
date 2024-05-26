@@ -547,8 +547,10 @@ const RexrothVarioFlowCategoryAPI=async (req, res, next) => {
     password: 'Cool1234567890-',
     database: 'bmg'
   });
+
+  let extractedSQL=response.choices[0].message.contentsplit('SELECT')[1].split(';')[0]
   
-  connection.query(`SELECT ${response.choices[0].message.content.split(';')[0].split('SELECT')[1]};`, (err, results) => {
+  connection.query(`SELECT ${extractedSQL};`, (err, results) => {
     if (err) {
       console.error('Error selecting data:', err);
     } else {
