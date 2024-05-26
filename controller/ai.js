@@ -526,7 +526,11 @@ const RexrothVarioFlowCategoryAPI=async (req, res, next) => {
       
     `},{"role":"user","content":`previous questions: ${previousQuestions}`},{
           "role":"user",
-          "content":`Input natural language, in the WHERE clause use LIKE '%keyword%' as much as possible, instead of ='keyword', the keyword is case-insensitive: ${sql}\n response: '''pure executable sql'''  \n`
+          "content":`Input natural language, in the WHERE clause use LIKE '%keyword%' as much as possible, instead of ='keyword', the keyword is case-insensitive: ${sql}`
+      
+        },{
+          "role":"assistant",
+          "content":`executable sql`
       
         }
     ],
@@ -548,7 +552,7 @@ const RexrothVarioFlowCategoryAPI=async (req, res, next) => {
     database: 'bmg'
   });
 
-  let extractedSQL=response.choices[0].message.contentsplit('SELECT')[1].split(';')[0]
+  let extractedSQL=response.choices[0].message.content.split('SELECT')[1].split(';')[0]
   
   connection.query(`SELECT ${extractedSQL};`, (err, results) => {
     if (err) {
